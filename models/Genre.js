@@ -17,4 +17,5 @@ const validateGenre = joi.object({
 const Genre = mongoose.model("Genres",genreSchema)
 
 exports.Genre = Genre;
-exports.validateGenre = validateGenre
+exports.validateGenre = validateGenre;
+exports.genreSchema = genreSchema
