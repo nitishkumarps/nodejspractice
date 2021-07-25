@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const joi=require("joi");
 const { genreSchema } = require("./Genre")
 const Joi = require("joi");
 
@@ -23,7 +22,7 @@ const movieSchema = new mongoose.Schema({
    }
 })
 
-const validateMovie = joi.object({
+const validateMovie = Joi.object({
     title:Joi.string().required(),
     genreId:Joi.string().required(),
     numberInStock:Joi.number(),
