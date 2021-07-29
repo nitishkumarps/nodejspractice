@@ -14,7 +14,7 @@ router.post("/",async (req,res)=>{
     const check = validateRental.validate(req.body);
     if(!check.error)
     {
-        try {
+      
             const customer= await Customer.findById(req.body.customerId)
             const movie = await Movie.findById(req.body.movieId)
             const rental = new Rental({
@@ -44,14 +44,11 @@ router.post("/",async (req,res)=>{
             }
            
 
-        }
-        catch(error){
-            res.status(400).send(error.message)
-        }
+     
 
     }
     else{
-        res.status(400).send("Invalid Request")
+        res.status(400).send(check.error)
     }
 })
 

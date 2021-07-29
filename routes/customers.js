@@ -1,5 +1,6 @@
 //IMPORTS
-
+const auth = require("../middleware/auth");
+const admin =require("../middleware/admin");
 const express = require("express")
 const router = express.Router();
 const { Customer,validateCustomer } = require("../models/Customer")
@@ -7,13 +8,14 @@ const { Customer,validateCustomer } = require("../models/Customer")
 
 
 //GET ALL CUSTOMERS
-router.get("/",async (req,res)=>{
+router.get("/",auth,async (req,res)=>{
+    //throw new Error("Could not get the customers")
     const customers = await Customer.find().sort({name:1})
     res.send(customers)
 })
 
 //ADD A CUSTOMER
-router.post("/",async (req,res)=>{
+router.post("/",auth, async (req,res)=>{
     const check=validateCustomer.validate(req.body)
     if(!check.error)
     {
@@ -35,7 +37,7 @@ router.post("/",async (req,res)=>{
 
 //UPDATE A CUSTOMER
 
-router.put("/:id",async (req,res)=>{
+router.put("/:id", auth,async (req,res)=>{
     const check=validateCustomer.validate(req.body)
     if(!check.error)
     {
@@ -55,7 +57,7 @@ router.put("/:id",async (req,res)=>{
 })
 
 //DELETE A CUSTOMER
-router.delete("/:id",async (req,res)=>{
+router.delete("/:id",[auth,admin],async (req,res)=>{
     const result = await Customer.findOneAndDelete(req.params.id)
     if(!result) res.status(404).send("Data not found")
     res.send(result)
@@ -63,7 +65,7 @@ router.delete("/:id",async (req,res)=>{
 } )
 
 //GET A CUSTOMER BY ID
-router.get("/:id",async (req,res)=>{
+router.get("/:id",auth,async (req,res)=>{
     const result = await Customer.find({_id:req.params.id})
     if(!result) res.status(404).send("Data not found")
     res.send(result)
