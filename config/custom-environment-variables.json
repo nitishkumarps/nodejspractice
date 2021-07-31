@@ -1,3 +1,4 @@
 {
-    "jwtPrivateKey":"vidlyjwtPrivateKey"
+    "jwtPrivateKey":"vidlyjwtPrivateKey",
+    "MongodbString":"vidlyMongodbString"
 }
